@@ -1,0 +1,33 @@
+# Maven build artifacts
+target/
+*.class
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Git files
+.git/
+.gitignore
+
+# Documentation
+*.md
+*.pdf
+*.docx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+
+# Test files
+src/test/

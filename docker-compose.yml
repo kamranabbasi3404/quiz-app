@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql-db:
+    image: mysql:8.0
+    container_name: quizapp-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: quizapp
+      MYSQL_USER: quizuser
+      MYSQL_PASSWORD: quizpass
+    ports:
+      - "3307:3306"  # Map to 3307 on host to avoid conflicts
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./setup_database.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./init-data.sql:/docker-entrypoint-initdb.d/02-data.sql
+    networks:
+      - quiz-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Quiz Application Service
+  quiz-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quizapp-java
+    restart: always
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_NAME: quizapp
+      DB_USER: root
+      DB_PASSWORD: rootpassword
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - quiz-network
+    # For GUI applications, you might need X11 forwarding
+    # Uncomment below for Linux/Mac with X11
+    # environment:
+    #   - DISPLAY=${DISPLAY}
+    # volumes:
+    #   - /tmp/.X11-unix:/tmp/.X11-unix
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  quiz-network:
+    driver: bridge
