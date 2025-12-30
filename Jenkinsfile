@@ -64,7 +64,7 @@ pipeline {
         
         stage('Docker Push') {
             when {
-                branch 'main'
+                branch 'master'
             }
             steps {
                 echo 'Pushing Docker image to registry...'
