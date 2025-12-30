@@ -71,8 +71,8 @@ pipeline {
                 script {
                     // Uncomment and configure when you have a Docker registry
                     // withDockerRegistry([credentialsId: 'docker-credentials', url: 'https://your-registry']) {
-                    //     bat "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    //     bat "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest"
+                    //     sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    //     sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest"
                     // }
                     echo 'Docker push stage - configure registry credentials to enable'
                 }
