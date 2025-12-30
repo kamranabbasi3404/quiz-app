@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import com.scd.quizapp.controller.TeacherController;
 import com.scd.quizapp.model.Quiz;
-import java.awt.event.ActionEvent;
 
 import java.util.List;
 

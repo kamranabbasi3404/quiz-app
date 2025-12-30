@@ -242,6 +242,18 @@ docker restart jenkins
 - Use HTTPS URL for repository
 - Verify credentials are selected in pipeline config
 
+### Plugin Installation Failed in UI
+
+If you cannot find or install plugins through the Jenkins UI, use the Docker CLI:
+
+```powershell
+# Install missing plugins
+docker exec jenkins jenkins-plugin-cli --plugins maven-plugin git docker-workflow workflow-aggregator
+
+# Restart Jenkins to apply changes
+docker restart jenkins
+```
+
 ---
 
 ## Best Practices

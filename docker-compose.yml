@@ -12,7 +12,7 @@ services:
       MYSQL_USER: quizuser
       MYSQL_PASSWORD: quizpass
     ports:
-      - "3307:3306"  # Map to 3307 on host to avoid conflicts
+      - "3307:3306" # Map to 3307 on host to avoid conflicts
     volumes:
       - mysql-data:/var/lib/mysql
       - ./setup_database.sql:/docker-entrypoint-initdb.d/01-schema.sql
@@ -20,10 +20,11 @@ services:
     networks:
       - quiz-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword" ]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   # Quiz Application Service
   quiz-app:

@@ -13,12 +13,10 @@ public class QuizAttemptView extends JFrame {
     private ButtonGroup buttonGroup;
     private JButton nextButton;
     private JButton submitButton;
-    private int currentQuestionIndex;
 
     public QuizAttemptView(QuizAttemptController quizAttemptController, List<Question> questions, int width,
             int height) {
         this.quizAttemptController = quizAttemptController;
-        this.currentQuestionIndex = 0;
 
         setTitle("Attempt Quiz");
         setSize(width, height);

@@ -84,16 +84,16 @@ pipeline {
                 echo 'Deploying application with Docker Compose...'
                 script {
                     // Stop existing containers
-                    sh 'docker-compose down || exit 0'
+                    sh 'docker-compose -p quiz-app down || exit 0'
                     
                     // Start new containers
-                    sh 'docker-compose up -d --build'
+                    sh 'docker-compose -p quiz-app up -d --build'
                     
                     // Wait for services to be healthy
                     sh 'sleep 30'
                     
                     // Check container status
-                    sh 'docker-compose ps'
+                    sh 'docker-compose -p quiz-app ps'
                 }
             }
         }
