@@ -23,14 +23,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application with Maven...'
-                bat 'mvn clean compile'
+                sh 'mvn clean compile'
             }
         }
         
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'mvn test'
+                sh 'mvn test'
             }
             post {
                 always {
@@ -43,7 +43,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'Packaging the application...'
-                bat 'mvn package -DskipTests'
+                sh 'mvn package -DskipTests'
             }
             post {
                 success {
@@ -56,8 +56,8 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 script {
-                    bat "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
-                    bat "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
+                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                    sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
                 }
             }
         }
@@ -84,16 +84,16 @@ pipeline {
                 echo 'Deploying application with Docker Compose...'
                 script {
                     // Stop existing containers
-                    bat 'docker-compose down || exit 0'
+                    sh 'docker-compose down || exit 0'
                     
                     // Start new containers
-                    bat 'docker-compose up -d --build'
+                    sh 'docker-compose up -d --build'
                     
                     // Wait for services to be healthy
-                    bat 'timeout /t 30'
+                    sh 'sleep 30'
                     
                     // Check container status
-                    bat 'docker-compose ps'
+                    sh 'docker-compose ps'
                 }
             }
         }
@@ -103,7 +103,7 @@ pipeline {
                 echo 'Performing health check...'
                 script {
                     // Check if containers are running
-                    bat 'docker ps | findstr quizapp'
+                    sh 'docker ps | grep quizapp'
                 }
             }
         }
